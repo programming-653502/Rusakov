@@ -10,7 +10,7 @@ int main()
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 	int kol=0,i,j,k,x=0;
-	printf("Первые 10 пифагоровыx тройки:\n");
+	printf("РџРµСЂРІС‹Рµ 10 РїРёС„Р°РіРѕСЂРѕРІС‹x С‚СЂРѕР№РєРё:\n");
 	for (i = 1; i < 100; i++)
 	for (j = i+1; j < 100; j++)
 	for (k = j+1; k < 100; k++)
