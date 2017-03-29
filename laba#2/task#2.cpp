@@ -6,45 +6,54 @@
 
 using namespace std;
 
-unsigned long long int fact(int x);
-float it(float x, float E);
-int rec();
+long double it();
+long double rec(int i1);
+float E,x;
+int n=0;
 
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	float x1=0,E1=0;
-	scanf("%f",&x1);
-	printf("%d",fact((int)x1));
+	long double ans1=0,ans2=0;
+	int i;
+	printf("¬ведите x ");
+	scanf("%f",&x);
+
+	printf("¬ведите точность E ");
+	scanf("%f",&E);
+	do
+	{
+		n++;
+		ans1=it();
+		ans2=rec(1);
+
+	}
+	while (abs(sin(x)-ans1)>E);
+	cout<<ans1<<" "<<n;
 	getch();
 	return 0;
 }
 
-unsigned long long int fact(int x)
+long double it()
 {
-	int i;
-	unsigned long long int ans=1;
-	for (i = 1; i <= x; i++) {
-	ans=ans*i;
+	int i,j;
+	long double ans=0,k;
+	for (i = 1; i <=n; i++)
+	{
+		k=pow(x,2*i-1);
+		for (j = 2; j <= 2*i-1; j++) k/=j;
+		ans+=pow(-1.0,i-1)*k;
 	}
 	return ans;
 }
 
-float it(float x,float E)
+long double rec(int i1)
 {
-	int n=0,i;
-	float ans;
-	do
-	{
-		n++;
-		ans=0;
-		for (i = 1; i <=n; i++)
-		{
-			ans+=pow(-1.0,i-1)*(pow(x,2*i-1)/fact(2*i-1));
-		}
-	}
-	while (abs(sin(x)-ans)>E);
-	return ans;
+	if (i1==n+1) return 0;
+	int j;
+	long double k=pow(x,2*i1-1);
+	for (j = 2; j <= 2*i1-1; j++) k/=j;
+	return rec(i1+1)+pow(-1.0,i1-1)*k;
 }
 //---------------------------------------------------------------------------
