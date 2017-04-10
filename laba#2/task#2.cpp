@@ -6,6 +6,53 @@
 
 using namespace std;
 
+
+float Enter()
+{
+	bool f;
+	char s[50];
+	int k=0;
+	while (1)
+	{
+		f=true;
+		k=0;
+		gets(s);
+		if (strlen(s)==1&&!isdigit(s[0]))
+		{
+            puts("Ошибка ввода! Повторите ввод!");
+			continue;
+		}
+		for (int i = 0; i < strlen(s); i++)
+		{
+			if (s[i]=='-')
+			{
+				if (i!=0)
+				{
+					f=false;
+					break;
+				}
+			}
+			if (s[i]=='.')
+			{
+				k++;
+				if (i==0||i==strlen(s)-1)
+				{
+					f=false;
+					break;
+				}
+			}
+			if ((!isdigit(s[i])&&s[i]!='.'&&s[i]!='-')||k>1)
+			{
+				f=false;
+				break;
+			}
+		}
+		if (!f) puts("Ошибка ввода! Повторите ввод!");
+		else break;
+	}
+	return atof(s);
+}
+
 long double it();
 long double rec(int i1);
 float E,x;
@@ -17,11 +64,28 @@ int main()
 	SetConsoleOutputCP(1251);
 	long double ans1=0,ans2=0;
 	int i;
-	printf("Введите x ");
-	scanf("%f",&x);
-
-	printf("Введите точность E ");
-	scanf("%f",&E);
+	puts("Введите x (от -1.57 до 1.57)");
+	while (1)
+	{
+		x=Enter();
+		if (x<(-1.57)||x>1.57)
+		{
+			puts("Ошибка ввода! Повторите ввод!");
+			continue;
+		}
+		break;
+	}
+	puts("Введите точность E (от 0.000001 до 1)");
+	while (1)
+	{
+		E=Enter();
+		if (E<0.0000001||E>1)
+		{
+			puts("Ошибка ввода! Повторите ввод!");
+			continue;
+		}
+		break;
+	}
 	do
 	{
 		n++;
@@ -30,7 +94,8 @@ int main()
 
 	}
 	while (abs(sin(x)-ans1)>E);
-	cout<<ans1<<" "<<n;
+	cout<<"Sin(x)="<<ans1<<endl<<"При n="<<n<<" исследуемое выражение"<<
+	" отличается от sin(x)="<<sin(x)<<" менее,\nчем на заданную погрешность E="<<E;
 	getch();
 	return 0;
 }
