@@ -1,0 +1,54 @@
+//---------------------------------------------------------------------------
+
+#ifndef ReadersListH
+#define ReadersListH
+
+
+#pragma hdrstop
+#pragma argsused
+#include <tchar.h>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <windows.h>
+#include <iostream>
+#include <fstream>
+#include <locale.h>
+#include <iomanip>
+#include <system.hpp>
+#include <SysUtils.hpp>
+#include "Readers.h"
+using namespace std;
+
+struct Data
+{
+	String Name,Author,Cost,Num,Note;
+};
+
+struct Node
+{
+	Data x;
+	Node *Next,*Prev;
+};
+
+
+class Rlist
+{
+	int size;
+	Node *Head,*Tail;
+public:
+	Rlist():Head(NULL),Tail(NULL){size=0;};
+	~Rlist();
+	void Show();
+	void Add(Data);
+	void Replace(Data,int);
+	void Delete(int);
+	void Save();
+	int Size();
+	int Check(Data);
+};
+
+Rlist rlist;
+#endif
+

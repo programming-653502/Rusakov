@@ -1,0 +1,335 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Readers.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TFReaders *FReaders;
+
+bool Modified=false;
+int ColN,RowN;
+
+//---------------------------------------------------------------------------
+__fastcall TFReaders::TFReaders(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void RModif()
+{
+	Modified = false;
+	Rdata x;
+	x.Name  = FReaders->Grid->Cells[0][RowN];
+	x.Group = FReaders->Grid->Cells[1][RowN];
+	x.Phone = FReaders->Grid->Cells[2][RowN];
+	x.Email = FReaders->Grid->Cells[3][RowN];
+	x.Note  = FReaders->Grid->Cells[4][RowN];
+	x.Penalty  = rlist.Item(RowN-1).Penalty;
+	FReaders->CReadersName ->Items->Delete(RowN-1);
+	FReaders->CReadersName ->Items->Insert(RowN-1,x.Name);
+	FReaders->CReadersGroup->Items->Delete(RowN-1);
+	FReaders->CReadersGroup->Items->Insert(RowN-1,x.Group);
+	FReaders->CReadersPhone->Items->Delete(RowN-1);
+	FReaders->CReadersPhone->Items->Insert(RowN-1,x.Phone);
+	FReaders->CReadersEmail->Items->Delete(RowN-1);
+	FReaders->CReadersEmail->Items->Insert(RowN-1,x.Email);
+	FReaders->CReadersNote ->Items->Delete(RowN-1);
+	FReaders->CReadersNote ->Items->Insert(RowN-1,x.Note);
+	rlist.Replace(x,RowN-1);
+	rlist.Save();
+}
+
+void RClearGrid()
+{
+	for (int i = 0; i < 5; i++)
+	for (int j = 1; j < FReaders->Grid->RowCount; j++)
+	FReaders->Grid->Cells[i][j] = "";
+
+}
+
+void RComboBoxClear()
+{
+	FReaders->CReadersName ->ItemIndex=-1;
+	FReaders->CReadersGroup->ItemIndex=-1;
+	FReaders->CReadersPhone->ItemIndex=-1;
+	FReaders->CReadersEmail->ItemIndex=-1;
+	FReaders->CReadersNote ->ItemIndex=-1;
+	FReaders->CReadersName ->Text = "";
+	FReaders->CReadersGroup->Text = "";
+	FReaders->CReadersPhone->Text = "";
+	FReaders->CReadersEmail->Text = "";
+	FReaders->CReadersNote ->Text = "";
+}
+
+void __fastcall TFReaders::BReadersBackClick(TObject *Sender)
+{
+	FReaders->Close();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFReaders::BReadersAddClick(TObject *Sender)
+{
+	Rdata x;
+	int i,size = rlist.Size(),k=0;
+	x.Name    = CReadersName ->Text;
+	x.Group   = CReadersGroup->Text;
+	x.Phone   = CReadersPhone->Text;
+	x.Email   = CReadersEmail->Text;
+	x.Note    = CReadersNote ->Text;
+	x.Penalty = 0;
+	if (x.Name  == ""
+	&&	x.Group == ""
+	&& 	x.Phone == ""
+	&& 	x.Email == ""
+	&&	x.Note  == "")
+	{
+		return;
+	}
+	RComboBoxClear();
+
+	k = rlist.Check(x);
+	if (k!=-1)
+	{
+		rlist.Replace(x,k);
+		CReadersPhone->Items->Delete(k);
+		CReadersPhone->Items->Insert(k,x.Phone);
+	} else
+	{
+		rlist.Add(x);
+		CReadersName ->Items->Add(x.Name);
+		CReadersGroup->Items->Add(x.Group);
+		CReadersPhone->Items->Add(x.Phone);
+		CReadersEmail->Items->Add(x.Email);
+		CReadersNote ->Items->Add(x.Note);
+	}
+	RClearGrid();
+	rlist.Show();
+	rlist.Save();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFReaders::CReadersNameSelect(TObject *Sender)
+{
+	CReadersGroup->ItemIndex = CReadersName->ItemIndex;
+	CReadersPhone->ItemIndex = CReadersName->ItemIndex;
+	CReadersEmail->ItemIndex = CReadersName->ItemIndex;
+	CReadersNote ->ItemIndex = CReadersName->ItemIndex;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFReaders::GridGetEditText(TObject *Sender, int ACol, int ARow, UnicodeString &Value)
+{
+	Modified = true;
+	ColN = ACol;
+	RowN = ARow;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFReaders::GridExit(TObject *Sender)
+{
+	if (Modified)
+	{
+		RModif();
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFReaders::GridSelectCell(TObject *Sender, int ACol, int ARow, bool &CanSelect)
+
+{
+	if (Modified)
+	{
+		RModif();
+	}
+	CReadersName    ->ItemIndex = ARow-1;
+	CReadersGroup   ->ItemIndex = ARow-1;
+	CReadersPhone   ->ItemIndex = ARow-1;
+	CReadersEmail   ->ItemIndex = ARow-1;
+	CReadersNote    ->ItemIndex = ARow-1;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFReaders::FormClose(TObject *Sender, TCloseAction &Action)
+{
+	FMain->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFReaders::BReadersDeleteClick(TObject *Sender)
+{
+	Rdata x;
+	int k = 0;
+	x.Name  = CReadersName ->Text;
+	x.Group = CReadersGroup->Text;
+	x.Phone = CReadersPhone->Text;
+	x.Email = CReadersEmail->Text;
+	x.Note  = CReadersNote ->Text;
+
+	RClearGrid();
+
+	k = rlist.Check(x);
+	if (k != -1)
+	{
+		RComboBoxClear();
+		rlist.Delete(k);
+		CReadersName ->Items->Delete(k);
+		CReadersGroup->Items->Delete(k);
+		CReadersPhone->Items->Delete(k);
+		CReadersEmail->Items->Delete(k);
+		CReadersNote ->Items->Delete(k);
+	} else
+	{
+		ShowMessage("Такого читателя нет!");
+		return;
+	}
+
+	rlist.Show();
+	rlist.Save();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFReaders::BReadersSearchClick(TObject *Sender)
+{
+	Rdata x;
+	int k = 0;
+	x.Name  = CReadersName ->Text;
+	x.Group = CReadersGroup->Text;
+	x.Phone = CReadersPhone->Text;
+	x.Email = CReadersEmail->Text;
+	x.Note  = CReadersNote ->Text;
+
+	k = rlist.Check(x);
+	if (k != -1)
+	{
+		Grid->Col = 0;
+		Grid->Row = k+1;
+	} else
+	{
+		ShowMessage("Такого читателя нет!");
+		return;
+	}
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TFReaders::FormActivate(TObject *Sender)
+{
+	Grid->Cells[0][0]="Ф.И.О.";
+	Grid->Cells[1][0]="Группа";
+	Grid->Cells[2][0]="Телефон";
+	Grid->Cells[3][0]="Электронная почта";
+	Grid->Cells[4][0]="Примечение";
+	RClearGrid();
+	rlist.Show();
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFReaders::FormCreate(TObject *Sender)
+{
+	TStringList *List= new TStringList;
+	String Dir = "e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Readers\\";
+	List->LoadFromFile(Dir+"Grid.txt");
+	if (List->Count == 0)
+	{
+		return;
+	}
+	int i;
+	Rdata x;
+	for (i = 0; i < List->Count/6; i++)
+	{
+		x.Name    = List->Strings[i*6];
+		x.Group   = List->Strings[i*6+1];
+		x.Phone	  = List->Strings[i*6+2];
+		x.Email   = List->Strings[i*6+3];
+		x.Note    = List->Strings[i*6+4];
+		x.Penalty = StrToInt(List->Strings[i*6+5]);
+		rlist.Add(x);
+	}
+	CReadersName ->Items->LoadFromFile(Dir+"CReadersName.txt");
+	CReadersGroup->Items->LoadFromFile(Dir+"CReadersGroup.txt");
+	CReadersPhone->Items->LoadFromFile(Dir+"CReadersPhone.txt");
+	CReadersEmail->Items->LoadFromFile(Dir+"CReadersEmail.txt");
+	CReadersNote ->Items->LoadFromFile(Dir+"CReadersNote.txt");
+	delete List;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFReaders::GridSetEditText(TObject *Sender, int ACol, int ARow, const UnicodeString Value)
+{
+	if (ACol == 0) CReadersName  -> Text = Value;
+	if (ACol == 1) CReadersGroup -> Text = Value;
+	if (ACol == 2) CReadersPhone -> Text = Value;
+	if (ACol == 3) CReadersEmail -> Text = Value;
+	if (ACol == 4) CReadersNote  -> Text = Value;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFReaders::BReadersInfoClick(TObject *Sender)
+{
+	if (CReadersName->ItemIndex == -1)
+	{
+		ShowMessage("Выберите читателя!");
+		return;
+	}
+	Index = CReadersName->ItemIndex;
+	FReaders->Hide();
+	FInfo->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFReaders::GridDrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect,
+		  TGridDrawState State)
+{
+	  Rdata x;
+	  if (ARow != 0)  x = rlist.Item(ARow-1);
+	  if (State.Contains(gdFixed))
+	  {
+		  Grid->Canvas->Brush->Color = clBtnFace;
+		  Grid->Canvas->Font->Color = clWindowText;
+		  Grid->Canvas->FillRect(Rect);
+		  Frame3D(Grid->Canvas, Rect,
+				  clBtnHighlight, clBtnShadow, 1);
+	  }
+
+	  // если ячейка выделена
+	  else if (State.Contains(gdSelected))
+	  {
+		  Grid->Canvas->Brush->Color = clHighlight;
+		  Grid->Canvas->Font->Color = clHighlightText;
+		  Grid->Canvas->FillRect(Rect);
+	  }
+
+	  // закрашиваем ячейку (2, 2)
+	  else if (ACol == 0 && x.Penalty != 0)
+	  {
+		  if (x.Penalty == 1)
+		  {
+			Grid->Canvas->Brush->Color = clYellow;
+			Grid->Canvas->FillRect(Rect);
+		  }
+		  if (x.Penalty == 2)
+		  {
+			Grid->Canvas->Brush->Color = clRed;
+			Grid->Canvas->FillRect(Rect);
+		  }
+	  }
+
+      // Для всех остальных ячеек
+      else
+      {
+          Grid->Canvas->Brush->Color = Grid->Color;
+          Grid->Canvas->Font->Color = Grid->Font->Color;
+		  Grid->Canvas->FillRect(Rect);
+      }
+
+	  AnsiString text = Grid->Cells[ACol][ARow];
+	  Grid->Canvas->TextRect(Rect, Rect.Left, Rect.Top, text);
+}
+//---------------------------------------------------------------------------
+

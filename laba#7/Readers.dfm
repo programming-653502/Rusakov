@@ -1,0 +1,167 @@
+object FReaders: TFReaders
+  Left = 390
+  Top = 165
+  Caption = #1063#1080#1090#1072#1090#1077#1083#1080
+  ClientHeight = 444
+  ClientWidth = 733
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesigned
+  OnActivate = FormActivate
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Grid: TStringGrid
+    Left = 8
+    Top = 8
+    Width = 713
+    Height = 297
+    BiDiMode = bdLeftToRight
+    DefaultColWidth = 141
+    DefaultDrawing = False
+    FixedCols = 0
+    RowCount = 2
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing, goThumbTracking]
+    ParentBiDiMode = False
+    ScrollBars = ssVertical
+    TabOrder = 0
+    OnDrawCell = GridDrawCell
+    OnExit = GridExit
+    OnGetEditText = GridGetEditText
+    OnSelectCell = GridSelectCell
+    OnSetEditText = GridSetEditText
+    RowHeights = (
+      24
+      24)
+  end
+  object PProperties: TPanel
+    Left = 8
+    Top = 328
+    Width = 713
+    Height = 97
+    TabOrder = 1
+    object Group: TLabel
+      Left = 152
+      Top = 13
+      Width = 71
+      Height = 13
+      Caption = #1053#1086#1084#1077#1088' '#1075#1088#1091#1087#1087#1099
+    end
+    object Name: TLabel
+      Left = 16
+      Top = 13
+      Width = 35
+      Height = 13
+      Caption = #1060'.'#1048'.'#1054'.'
+    end
+    object Phone: TLabel
+      Left = 288
+      Top = 13
+      Width = 44
+      Height = 13
+      Caption = #1058#1077#1083#1077#1092#1086#1085
+    end
+    object Note: TLabel
+      Left = 560
+      Top = 13
+      Width = 61
+      Height = 13
+      Caption = #1055#1088#1080#1084#1077#1095#1072#1085#1080#1077
+    end
+    object Email: TLabel
+      Left = 424
+      Top = 13
+      Width = 100
+      Height = 13
+      Caption = #1069#1083#1077#1082#1090#1088#1086#1085#1085#1072#1103' '#1087#1086#1095#1090#1072
+    end
+    object BReadersAdd: TButton
+      Left = 319
+      Top = 59
+      Width = 75
+      Height = 25
+      Caption = #1044#1086#1073#1072#1074#1080#1090#1100
+      Default = True
+      TabOrder = 6
+      OnClick = BReadersAddClick
+    end
+    object CReadersName: TComboBox
+      Left = 16
+      Top = 32
+      Width = 121
+      Height = 21
+      TabOrder = 0
+      OnSelect = CReadersNameSelect
+    end
+    object BReadersDelete: TButton
+      Left = 415
+      Top = 59
+      Width = 75
+      Height = 25
+      Caption = #1059#1076#1072#1083#1080#1090#1100
+      TabOrder = 7
+      OnClick = BReadersDeleteClick
+    end
+    object CReadersGroup: TComboBox
+      Left = 152
+      Top = 32
+      Width = 121
+      Height = 21
+      TabOrder = 1
+    end
+    object CReadersPhone: TComboBox
+      Left = 288
+      Top = 32
+      Width = 121
+      Height = 21
+      TabOrder = 2
+    end
+    object CReadersEmail: TComboBox
+      Left = 424
+      Top = 32
+      Width = 121
+      Height = 21
+      TabOrder = 3
+    end
+    object CReadersNote: TComboBox
+      Left = 560
+      Top = 32
+      Width = 121
+      Height = 21
+      TabOrder = 4
+    end
+    object BReadersBack: TButton
+      Left = 606
+      Top = 59
+      Width = 75
+      Height = 25
+      Caption = #1053#1072#1079#1072#1076
+      TabOrder = 9
+      OnClick = BReadersBackClick
+    end
+    object BReadersSearch: TButton
+      Left = 512
+      Top = 59
+      Width = 75
+      Height = 25
+      Caption = #1053#1072#1081#1090#1080
+      TabOrder = 8
+      OnClick = BReadersSearchClick
+    end
+    object BReadersInfo: TButton
+      Left = 176
+      Top = 59
+      Width = 123
+      Height = 25
+      Caption = #1048#1085#1092#1086#1088#1084#1072#1094#1080#1103' '#1086' '#1082#1085#1080#1075#1072#1093
+      TabOrder = 5
+      OnClick = BReadersInfoClick
+    end
+  end
+end

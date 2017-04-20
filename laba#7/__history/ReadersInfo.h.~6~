@@ -1,0 +1,50 @@
+//---------------------------------------------------------------------------
+
+#ifndef ReadersInfoH
+#define ReadersInfoH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <Grids.hpp>
+#include "Readers.h"
+#include "InfoList.h"
+#include "BookList.h"
+#include <ExtCtrls.hpp>
+#include <fstream>
+//---------------------------------------------------------------------------
+class TFInfo : public TForm
+{
+__published:	// IDE-managed Components
+	TStringGrid *Grid;
+	TPanel *PProperties;
+	TComboBox *CAddBookName;
+	TButton *BAddBook;
+	TButton *BYellowPenalty;
+	TButton *BRedPenalty;
+	TButton *BAnnulPenalty;
+	TComboBox *CDeleteBookName;
+	TButton *BDeleteBook;
+	TButton *BBack;
+	void __fastcall FormActivate(TObject *Sender);
+	void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+	void __fastcall BBackClick(TObject *Sender);
+	void __fastcall FormCreate(TObject *Sender);
+	void __fastcall BYellowPenaltyClick(TObject *Sender);
+	void __fastcall BRedPenaltyClick(TObject *Sender);
+	void __fastcall BAnnulPenaltyClick(TObject *Sender);
+	void __fastcall BAddBookClick(TObject *Sender);
+	void __fastcall BDeleteBookClick(TObject *Sender);
+	void __fastcall GridSelectCell(TObject *Sender, int ACol, int ARow, bool &CanSelect);
+	void __fastcall GridDrawCell(TObject *Sender, int ACol, int ARow, TRect &Rect, TGridDrawState State);
+
+
+private:	// User declarations
+public:		// User declarations
+	__fastcall TFInfo(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TFInfo *FInfo;
+//---------------------------------------------------------------------------
+#endif

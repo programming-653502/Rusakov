@@ -1,0 +1,168 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Main.h"
+
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TFMain *FMain;
+//---------------------------------------------------------------------------
+__fastcall TFMain::TFMain(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TFMain::BMainExitClick(TObject *Sender)
+{
+	String Dir="e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\";
+	FBook->CBookName->Items->SaveToFile(Dir+"CBookName.txt");
+	FBook->CBookAuthor->Items->SaveToFile(Dir+"CBookAuthor.txt");
+	FBook->CBookCost->Items->SaveToFile(Dir+"CBookCost.txt");
+	FBook->CBookNum->Items->SaveToFile(Dir+"CBookNum.txt");
+	FBook->CBookNote->Items->SaveToFile(Dir+"CBookNote.txt");
+	Dir="e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Readers\\";
+	FReaders->CReadersName->Items->SaveToFile(Dir+"CReadersName.txt");
+	FReaders->CReadersGroup->Items->SaveToFile(Dir+"CReadersGroup.txt");
+	FReaders->CReadersPhone->Items->SaveToFile(Dir+"CReadersPhone.txt");
+	FReaders->CReadersEmail->Items->SaveToFile(Dir+"CReadersEmail.txt");
+	FReaders->CReadersNote->Items->SaveToFile(Dir+"CReadersNote.txt");
+
+	Close();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFMain::BMainBookClick(TObject *Sender)
+{
+	FMain->Hide();
+	FBook->Show();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFMain::BMainReadersClick(TObject *Sender)
+{
+	FMain->Hide();
+	FReaders->Show();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFMain::BBuyNewBackClick(TObject *Sender)
+{
+	PBuyNew->Hide();
+	PBuy->Show();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFMain::BBuyNewClick(TObject *Sender)
+{
+	PBuy->Hide();
+	PBuyNew->Show();
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TFMain::FormCreate(TObject *Sender)
+{
+	String Dir = "e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Info\\";
+	if (!FileExists(Dir))
+	{
+		CreateDirectory(Dir.c_str(),NULL);
+	}
+	Dir = "e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\";
+	if (!FileExists(Dir))
+	{
+		CreateDirectory(Dir.c_str(),NULL);
+	}
+	if (!FileExists(Dir+"Grid.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\Grid.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CBookName.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\CBookName.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CBookAuthor.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\CBookAuthor.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CBookCost.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\CBookCost.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CBookNum.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\CBookNum.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CBookNote.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\CBookNote.txt");
+		File.close();
+	}
+	Dir="e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Readers\\";
+	if (!FileExists(Dir))
+	{
+		CreateDirectory(Dir.c_str(),NULL);
+	}
+	if (!FileExists(Dir+"Grid.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Readers\\Grid.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CReadersName.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Readers\\CReadersName.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CReadersGroup.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Readers\\CReadersGroup.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CReadersPhone.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Readers\\CReadersPhone.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CReadersEmail.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Readers\\CReadersEmail.txt");
+		File.close();
+	}
+	if (!FileExists(Dir+"CReadersNote.txt"))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Readers\\CReadersNote.txt");
+		File.close();
+	}
+	Dir = "e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Accountability.txt";
+	if (!FileExists(Dir))
+	{
+		ofstream File("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Accountability.txt");
+		File.close();
+		TStringList *List = new TStringList;
+		List->Add("0");
+		List->Add("0");
+		List->Add("0");
+		List->Add("0");
+		List->SaveFromFile(Dir);
+		delete List;
+	}
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::BMainInfoClick(TObject *Sender)
+{
+	TStringList *list =  new TStringList;
+	list->LoadFromFile("e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Accountability.txt");
+	String S = "Кол-во книг в библиотеке: " +list->Strings[0]+"\nОбщяя стоймость книг: "+list->Strings[1]
+	+"\nКол-во книг на руках: "+list->Strings[2]+"\nКол-во читателей: "+list->Strings[3];
+	ShowMessage(S);
+	delete list;
+}
+//---------------------------------------------------------------------------
+

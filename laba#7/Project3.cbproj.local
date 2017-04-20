@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.639,=E:\LABI 2 sem\Prog\laba#7\Unit3.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.375,E:\LABI 2 sem\Prog\laba#7\Unit2.cpp=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.612,=E:\LABI 2 sem\Prog\laba#7\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.488,=E:\LABI 2 sem\Prog\laba#7\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.691,E:\LABI 2 sem\Prog\laba#7\Main.dfm=E:\LABI 2 sem\Prog\laba#7\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.413,E:\LABI 2 sem\Prog\laba#7\Unit1.dfm=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.238,E:\LABI 2 sem\Prog\laba#7\Book.h=E:\LABI 2 sem\Prog\laba#7\Unit2.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.862,E:\LABI 2 sem\Prog\laba#7\BookList.h=E:\LABI 2 sem\Prog\laba#7\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.643,E:\LABI 2 sem\Prog\laba#7\Unit1.dfm=E:\LABI 2 sem\Prog\laba#7\ReadersInfo.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.238,E:\LABI 2 sem\Prog\laba#7\Book.dfm=E:\LABI 2 sem\Prog\laba#7\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.375,E:\LABI 2 sem\Prog\laba#7\Unit2.dfm=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.691,E:\LABI 2 sem\Prog\laba#7\Main.h=E:\LABI 2 sem\Prog\laba#7\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.381,E:\LABI 2 sem\Prog\laba#7\Project3.cbproj=C:\Users\Станислав\Documents\RAD Studio\Projects\Project3.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.277,=E:\LABI 2 sem\Prog\laba#7\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.643,E:\LABI 2 sem\Prog\laba#7\Unit1.cpp=E:\LABI 2 sem\Prog\laba#7\ReadersInfo.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.742,E:\LABI 2 sem\Prog\laba#7\Unit1.cpp=E:\LABI 2 sem\Prog\laba#7\ReadersInfo.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.358,=E:\LABI 2 sem\Prog\laba#7\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.413,E:\LABI 2 sem\Prog\laba#7\Unit1.cpp=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.420,=C:\Users\Станислав\Documents\RAD Studio\Projects\Project3.res</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.091,=E:\LABI 2 sem\Prog\laba#7\ReadersList.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.238,E:\LABI 2 sem\Prog\laba#7\Book.cpp=E:\LABI 2 sem\Prog\laba#7\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.072,=C:\Users\Станислав\Documents\RAD Studio\Projects\Project3.res</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.646,=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit3.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.090,=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.500,=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.691,E:\LABI 2 sem\Prog\laba#7\Main.cpp=E:\LABI 2 sem\Prog\laba#7\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.415,=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.413,E:\LABI 2 sem\Prog\laba#7\Unit1.h=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.643,E:\LABI 2 sem\Prog\laba#7\Unit1.h=E:\LABI 2 sem\Prog\laba#7\ReadersInfo.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.296,E:\LABI 2 sem\Prog\laba#7\ReadersInfo.cpp=E:\LABI 2 sem\Prog\laba#7\InfoList.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.058,=E:\LABI 2 sem\Prog\laba#7\Readers.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.742,E:\LABI 2 sem\Prog\laba#7\Unit1.h=E:\LABI 2 sem\Prog\laba#7\ReadersInfo.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.296,E:\LABI 2 sem\Prog\laba#7\ReadersInfo.h=E:\LABI 2 sem\Prog\laba#7\InfoList.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.862,E:\LABI 2 sem\Prog\laba#7\BookList.cpp=E:\LABI 2 sem\Prog\laba#7\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.285,=E:\LABI 2 sem\Prog\laba#7\Unit3.pas</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.375,E:\LABI 2 sem\Prog\laba#7\Unit2.h=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit2.h</Transaction>
+  </Transactions>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="Main.cpp"/>
+    <File Path="Main.cpp"/>
+    <File Path="Main.dfm"/>
+    <File Path="Main.h"/>
+    <File Path="Book.cpp"/>
+    <File Path="Book.cpp"/>
+    <File Path="Book.dfm"/>
+    <File Path="Book.h"/>
+    <File Path="Readers.cpp"/>
+    <File Path="Readers.cpp"/>
+    <File Path="Readers.dfm"/>
+    <File Path="Readers.h"/>
+    <File Path="ReadersInfo.cpp"/>
+    <File Path="ReadersInfo.cpp"/>
+    <File Path="ReadersInfo.dfm"/>
+    <File Path="ReadersInfo.h"/>
+    <File Path="BookList.cpp"/>
+    <File Path="BookList.cpp"/>
+    <File Path="BookList.h"/>
+    <File Path="ReadersList.cpp"/>
+    <File Path="ReadersList.cpp"/>
+    <File Path="ReadersList.h"/>
+    <File Path="InfoList.cpp"/>
+    <File Path="InfoList.cpp"/>
+    <File Path="InfoList.h"/>
+    <File Path="Project3.cpp"/>
+    <File Path="Project3.res"/>
+  </ProjectSortOrder>
+</BorlandProject>

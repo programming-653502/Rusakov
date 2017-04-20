@@ -1,0 +1,269 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Book.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TFBook *FBook;
+
+bool Modified;
+int ColN,RowN;
+
+//---------------------------------------------------------------------------
+__fastcall TFBook::TFBook(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void Modif()
+{
+	Modified = false;
+	Data x;
+	x.Name   = FBook->Grid->Cells[0][RowN];
+	x.Author = FBook->Grid->Cells[1][RowN];
+	x.Cost   = FBook->Grid->Cells[2][RowN];
+	x.Num    = FBook->Grid->Cells[3][RowN];
+	x.Note   = FBook->Grid->Cells[4][RowN];
+	FBook->CBookName->   Items->Delete(RowN-1);
+	FBook->CBookName->   Items->Insert(RowN-1,x.Name);
+	FBook->CBookAuthor-> Items->Delete(RowN-1);
+	FBook->CBookAuthor-> Items->Insert(RowN-1,x.Author);
+	FBook->CBookCost->   Items->Delete(RowN-1);
+	FBook->CBookCost->   Items->Insert(RowN-1,x.Cost);
+	FBook->CBookNum->    Items->Delete(RowN-1);
+	FBook->CBookNum->    Items->Insert(RowN-1,x.Num);
+	FBook->CBookNote->   Items->Delete(RowN-1);
+	FBook->CBookNote->   Items->Insert(RowN-1,x.Note);
+	blist.Replace(x,RowN-1);
+	blist.Save();
+}
+
+void ClearGrid()
+{
+	for (int i = 0; i < 5; i++)
+	for (int j = 1; j < FBook->Grid->RowCount; j++)
+	FBook->Grid->Cells[i][j] = "";
+
+}
+
+void ComboBoxClear()
+{
+	FBook->CBookName   ->ItemIndex = -1;
+	FBook->CBookAuthor ->ItemIndex = -1;
+	FBook->CBookCost   ->ItemIndex = -1;
+	FBook->CBookNum    ->ItemIndex = -1;
+	FBook->CBookNote   ->ItemIndex = -1;
+	FBook->CBookName   ->Text = "";
+	FBook->CBookAuthor ->Text = "";
+	FBook->CBookCost   ->Text = "";
+	FBook->CBookNum    ->Text = "";
+	FBook->CBookNote   ->Text = "";
+}
+
+void __fastcall TFBook::BBookBackClick(TObject *Sender)
+{
+	FBook->Close();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFBook::BBookAddClick(TObject *Sender)
+{
+	Data x;
+	int i,size = blist.Size(),k = 0;
+	x.Name   = CBookName  ->Text;
+	x.Author = CBookAuthor->Text;
+	x.Cost   = CBookCost  ->Text;
+	x.Num    = CBookNum   ->Text;
+	x.Note   = CBookNote  ->Text;
+	if (x.Name   == ""
+	&&	x.Author == ""
+	&& 	x.Cost   == ""
+	&& 	x.Num    == ""
+	&&	x.Note   == "")
+	{
+		return;
+	}
+	ComboBoxClear();
+
+	k=blist.Check(x);
+	if (k!=-1)
+	{
+		blist.Replace(x,k);
+		CBookCost->Items->Delete(k);
+		CBookCost->Items->Insert(k,x.Cost);
+	} else
+	{
+		blist.Add(x);
+		CBookName   -> Items->Add(x.Name);
+		CBookAuthor -> Items->Add(x.Author);
+		CBookCost   -> Items->Add(x.Cost);
+		CBookNum    -> Items->Add(x.Num);
+		CBookNote   -> Items->Add(x.Note);
+	}
+	ClearGrid();
+	blist.Show();
+	blist.Save();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFBook::CBookNameSelect(TObject *Sender)
+{
+	CBookAuthor ->ItemIndex = CBookName->ItemIndex;
+	CBookCost   ->ItemIndex = CBookName->ItemIndex;
+	CBookNum    ->ItemIndex = CBookName->ItemIndex;
+	CBookNote   ->ItemIndex = CBookName->ItemIndex;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFBook::GridGetEditText(TObject *Sender, int ACol, int ARow, UnicodeString &Value)
+{
+	Modified=true;
+	ColN=ACol;
+	RowN=ARow;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFBook::GridExit(TObject *Sender)
+{
+	if (Modified)
+	{
+		Modif();
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFBook::GridSelectCell(TObject *Sender, int ACol, int ARow, bool &CanSelect)
+
+{
+	if (Modified)
+	{
+		Modif();
+	}
+	CBookName   ->ItemIndex = ARow-1;
+	CBookAuthor ->ItemIndex = ARow-1;
+	CBookCost   ->ItemIndex = ARow-1;
+	CBookNum    ->ItemIndex = ARow-1;
+	CBookNote   ->ItemIndex = ARow-1;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFBook::FormClose(TObject *Sender, TCloseAction &Action)
+{
+	FMain->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFBook::BBookDeleteClick(TObject *Sender)
+{
+	Data x;
+	int k = 0;
+	x.Name   = CBookName   -> Text;
+	x.Author = CBookAuthor -> Text;
+	x.Cost   = CBookCost   -> Text;
+	x.Num    = CBookNum    -> Text;
+	x.Note   = CBookNote   -> Text;
+
+	k = blist.Check(x);
+	if (k != -1)
+	{
+		ComboBoxClear();
+		blist.Delete(k);
+		CBookName   -> Items->Delete(k);
+		CBookAuthor -> Items->Delete(k);
+		CBookCost   -> Items->Delete(k);
+		CBookNum    -> Items->Delete(k);
+		CBookNote   -> Items->Delete(k);
+	} else
+	{
+		ShowMessage("Такой книги нет в библиотеке!");
+		return;
+	}
+	ClearGrid();
+	blist.Show();
+	blist.Save();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFBook::BBookSearchClick(TObject *Sender)
+{
+	Data x;
+	int k = 0;
+	x.Name   = CBookName   ->Text;
+	x.Author = CBookAuthor ->Text;
+	x.Cost   = CBookCost   ->Text;
+	x.Num    = CBookNum    ->Text;
+	x.Note   = CBookNote   ->Text;
+
+	k = blist.Check(x);
+	if (k != -1)
+	{
+		Grid->Col = 0;
+		Grid->Row = k+1;
+	} else
+	{
+		ShowMessage("Такой книги нет в библиотеке!");
+		return;
+	}
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TFBook::FormActivate(TObject *Sender)
+{
+	Grid->Cells[0][0] = "Название";
+	Grid->Cells[1][0] = "Автор";
+	Grid->Cells[2][0] = "Цена";
+	Grid->Cells[3][0] = "Кол-во шт.";
+	Grid->Cells[4][0] = "Примечение";
+	ClearGrid();
+	blist.Show();
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFBook::FormCreate(TObject *Sender)
+{
+	TStringList *List = new TStringList;
+	String Dir = "e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\";
+	List->LoadFromFile(Dir+"Grid.txt");
+	if (List->Count == 0)
+	{
+		return;
+	}
+	int i;
+	Data x;
+	for (i = 0; i < List->Count/5; i++)
+	{
+		x.Name   = List->Strings[i*5];
+		x.Author = List->Strings[i*5+1];
+		x.Cost   = List->Strings[i*5+2];
+		x.Num    = List->Strings[i*5+3];
+		x.Note   = List->Strings[i*5+4];
+		blist.Add(x);
+	}
+	CBookName   ->Items->LoadFromFile(Dir+"CBookName.txt");
+	CBookAuthor ->Items->LoadFromFile(Dir+"CBookAuthor.txt");
+	CBookCost   ->Items->LoadFromFile(Dir+"CBookCost.txt");
+	CBookNum    ->Items->LoadFromFile(Dir+"CBookNum.txt");
+	CBookNote   ->Items->LoadFromFile(Dir+"CBookNote.txt");
+	delete List;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFBook::GridSetEditText(TObject *Sender, int ACol, int ARow, const UnicodeString Value)
+
+{
+	if (ACol == 0) CBookName   -> Text = Value;
+	if (ACol == 1) CBookAuthor -> Text = Value;
+	if (ACol == 2) CBookCost   -> Text = Value;
+	if (ACol == 3) CBookNum    -> Text = Value;
+	if (ACol == 4) CBookNote   -> Text = Value;
+}
+//---------------------------------------------------------------------------
+

@@ -1,0 +1,88 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "ReadersInfo.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TFInfo *FInfo;
+Ilist ilist;
+//---------------------------------------------------------------------------
+__fastcall TFInfo::TFInfo(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+
+void IClearGrid()
+{
+	for (int i = 0; i < 5; i++)
+	for (int j = 1; j < FBook->Grid->RowCount; j++)
+	FBook->Grid->Cells[i][j] = "";
+
+}
+
+void __fastcall TFInfo::FormActivate(TObject *Sender)
+{
+	Pdata x = rlist.Item(Index) ;
+	AnsiString S = x.Name;
+	FInfo->Caption = S;
+	//FInfo->Font->Color=clWindowText;
+	if (x.P) FInfo->Font->Color=clYellow;
+	if () FInfo->Font->Color=clRed;
+	AnsiString Dir = "e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Info\\"+S+".txt";
+	if (!FileExists(Dir))
+	{
+		char s[200];
+		strcpy( s, Dir.c_str() );
+		ofstream File(s);
+		File.close();
+	}
+
+	TStringList *List= new TStringList;
+	List->LoadFromFile(Dir);
+	if (List->Count == 0)
+	{
+		return;
+	}
+	int i;
+	IData x;
+	for (i = 0; i < List->Count/5; i++)
+	{
+		x.Name  = List->Strings[i*5];
+		x.Author = List->Strings[i*5+1];
+		x.Cost = List->Strings[i*5+2];
+		x.Num = List->Strings[i*5+3];
+		x.Note  = List->Strings[i*5+4];
+		CDeleteBookName->Items->Add(x.Name);
+		ilist.Add(x);
+	}
+	delete List;
+
+
+	IClearGrid();
+	ilist.Show();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFInfo::FormClose(TObject *Sender, TCloseAction &Action)
+{
+	FReaders->Show();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFInfo::BBackClick(TObject *Sender)
+{
+	ilist.Save(FReaders->CReadersName->Text);
+	FInfo->Close();
+}
+//---------------------------------------------------------------------------
+void __fastcall TFInfo::FormCreate(TObject *Sender)
+{
+	Grid->Cells[0][0] = "Название";
+	Grid->Cells[1][0] = "Автор";
+	Grid->Cells[2][0] = "Цена";
+	Grid->Cells[3][0] = "Кол-во шт.";
+	Grid->Cells[4][0] = "Примечение";
+}
+//---------------------------------------------------------------------------

@@ -1,0 +1,39 @@
+//---------------------------------------------------------------------------
+
+#ifndef ReadersH
+#define ReadersH
+//---------------------------------------------------------------------------
+#include <Classes.hpp>
+#include <Controls.hpp>
+#include <StdCtrls.hpp>
+#include <Forms.hpp>
+#include <ExtCtrls.hpp>
+#include <Grids.hpp>
+//---------------------------------------------------------------------------
+class TForm1 : public TForm
+{
+__published:	// IDE-managed Components
+	TStringGrid *Grid;
+	TPanel *PProperties;
+	TLabel *Author;
+	TLabel *Name;
+	TLabel *Cost;
+	TLabel *Note;
+	TLabel *Num;
+	TButton *BBookAdd;
+	TComboBox *CBookName;
+	TButton *BBookDelete;
+	TComboBox *CBookAuthor;
+	TComboBox *CBookCost;
+	TComboBox *CBookNum;
+	TComboBox *CBookNote;
+	TButton *BBookBack;
+	TButton *BBookSearch;
+private:	// User declarations
+public:		// User declarations
+	__fastcall TForm1(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm1 *Form1;
+//---------------------------------------------------------------------------
+#endif

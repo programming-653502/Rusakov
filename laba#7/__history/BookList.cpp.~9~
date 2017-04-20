@@ -1,0 +1,155 @@
+#pragma hdrstop
+
+#include "BookList.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+
+Blist::~Blist()
+{
+	while (Head)
+	{
+		Tail=Head->Next;
+		delete Head;
+		Head=Tail;
+	}
+}
+
+void Blist::Add(Data pdata)
+{
+	FReaders->Grid->RowCount += 1;
+	size++;
+	Node *temp=new Node;
+	temp->Next=NULL;
+	temp->x=pdata;
+	if (Head!=NULL)
+	{
+		temp->Prev=Tail;
+		Tail->Next=temp;
+		Tail=temp;
+	}
+	else
+	{
+		temp->Prev=NULL;
+		Head=Tail=temp;
+	}
+}
+
+void Blist::Show()
+{
+	Node *temp=Head;
+	int i=1;
+	while (temp!=NULL)
+	{
+		FBook->Grid->Cells[0][i]=temp->x.Name;
+		FBook->Grid->Cells[1][i]=temp->x.Author;
+		FBook->Grid->Cells[2][i]=temp->x.Cost;
+		FBook->Grid->Cells[3][i]=temp->x.Num;
+		FBook->Grid->Cells[4][i]=temp->x.Note;
+		i++;
+		temp=temp->Next;
+	}
+
+}
+
+int Blist::Size() {return size;}
+
+int Blist::Check(Data pdata)
+{
+	Node *temp=Head;
+	int i=0;
+	while (temp!=NULL)
+	{
+		if (temp->x.Name==pdata.Name
+		&&  temp->x.Author==pdata.Author
+		&&  temp->x.Cost==pdata.Cost
+		&&  temp->x.Note==pdata.Note) return i;
+		temp=temp->Next;
+		i++;
+	}
+	return -1;
+}
+
+void Blist::Replace(Data pdata,int j)
+{
+	Node *temp=Head;
+	int i=0;
+	while (temp!=NULL)
+	{
+		if (i==j)
+		{
+			temp->x=pdata;
+			return;
+		}
+		i++;
+		temp=temp->Next;
+	}
+}
+
+void Blist::Delete(int j)
+{
+	if (Head == NULL) {return;}
+	Node *temp = Head;
+	FBook->Grid->RowCount -= 1;
+	size--;
+	if (size==0)
+	{
+		delete temp;
+		Head = NULL;
+		Tail = NULL;
+		return;
+	}
+	if (j == 0)
+	{
+		Head = temp->Next;
+		temp->Next->Prev=NULL;
+		delete temp;
+		return;
+	}
+	if (j == size)
+	{
+		temp=Tail;
+		Tail = temp->Prev;
+		Tail->Next=NULL;
+		delete temp;
+		return;
+	}
+	int i = 1;
+	temp = temp->Next;
+	while (temp != NULL)
+	{
+		if (i == j)
+		{
+			temp->Prev->Next=temp->Next;
+			temp->Next->Prev=temp->Prev;
+			delete temp;
+			return;
+		}
+		i++;
+		temp = temp->Next;
+	}
+
+
+}
+
+void Blist::Save()
+{
+	String Dir="e:\\LABI 2 sem\\Prog\\laba#7\\Debug\\Win32\\Book\\";
+
+	TStringList *List= new TStringList;
+	Node *temp=Head;
+	while (temp!=NULL)
+	{
+		List->Add(temp->x.Name);;
+		List->Add(temp->x.Author);
+		List->Add(temp->x.Cost);
+		List->Add(temp->x.Num);
+		List->Add(temp->x.Note);
+		temp=temp->Next;
+	}
+	List->SaveToFile(Dir+"Grid.txt");
+	delete List;
+}
+
+
+
+

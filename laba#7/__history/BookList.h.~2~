@@ -1,0 +1,48 @@
+//---------------------------------------------------------------------------
+
+#ifndef BookListH
+#define BookListH
+
+
+#pragma hdrstop
+#pragma argsused
+
+#include <tchar.h>
+#include <tchar.h>
+#include <conio.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <windows.h>
+#include <iostream>
+#include <locale.h>
+#include <iomanip>
+#include "Book.h"
+using namespace std;
+
+struct Data
+{
+	String Name,Author,Cost,Num,Note;
+};
+
+struct Node
+{
+	Data x;
+	Node *Next,*Prev;
+};
+
+//Node *Head=NULL,*Tail=NULL;
+
+class Blist
+{
+	int size;
+	Node *Head,*Tail;
+public:
+	Blist():Head(NULL),Tail(NULL){size=0;};
+	~Blist();
+	void Show();
+	void Add(Data x);
+};
+
+#endif
+
