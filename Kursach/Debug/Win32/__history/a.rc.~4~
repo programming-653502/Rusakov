@@ -1,0 +1,3 @@
+HIT  SOUND "Hit.wav"
+MISS SOUND "Miss.wav"
+FAIL SOUND "Fail.wav"

@@ -1,0 +1,6 @@
+HIT  SOUND "Hit.wav"
+MISS SOUND "Miss.wav"
+FAIL SOUND "Fail.wav"
+RECORD SOUND "Record.wav"
+GAMEOVER SOUND "GameOver.wav"
+

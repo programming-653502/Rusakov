@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.791,=E:\LABI 2 sem\Kursach\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.065,C:\Users\Станислав\Documents\RAD Studio\Projects\Unit2.h=E:\LABI 2 sem\Kursach\Unit2.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.584,E:\LABI 2 sem\Kursach\Unit1.h=E:\LABI 2 sem\Kursach\Main.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.584,E:\LABI 2 sem\Kursach\Unit1.cpp=E:\LABI 2 sem\Kursach\Main.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.185,=C:\Program Files (x86)\Embarcadero\RAD Studio\8.0\lib\audiere.lib</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.889,C:\Program Files (x86)\Embarcadero\RAD Studio\8.0\lib\audiere.lib=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.065,C:\Users\Станислав\Documents\RAD Studio\Projects\Unit2.dfm=E:\LABI 2 sem\Kursach\Unit2.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.015,E:\LABI 2 sem\Kursach\List.cpp=E:\LABI 2 sem\Kursach\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.374,C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.dfm=E:\LABI 2 sem\Kursach\Unit1.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.308,=E:\LABI 2 sem\1\Hit.wav</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.814,E:\LABI 2 sem\1\Hit.wav=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.500,E:\LABI 2 sem\1\a.rc=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.329,=E:\LABI 2 sem\1\a.rc</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.943,=E:\LABI 2 sem\1\a.rc</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.521,E:\LABI 2 sem\1\a.rc=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.864,E:\LABI 2 sem\Kursach\AimTraining.cbproj=E:\LABI 2 sem\Kursach\Project3.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.673,=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.584,E:\LABI 2 sem\Kursach\Unit1.dfm=E:\LABI 2 sem\Kursach\Main.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.217,E:\LABI 2 sem\Kursach\Unit2.cpp=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.065,C:\Users\Станислав\Documents\RAD Studio\Projects\Unit2.cpp=E:\LABI 2 sem\Kursach\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.374,C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.cpp=E:\LABI 2 sem\Kursach\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.825,=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.090,=C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.336,E:\LABI 2 sem\Kursach\Unit2.cpp=</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.805,=C:\Users\Станислав\Documents\RAD Studio\Projects\Project3.res</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.072,=C:\Users\Станислав\Documents\RAD Studio\Projects\Project3.res</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.198,=E:\LABI 2 sem\Kursach\Debug\Win32\a.rc</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.015,E:\LABI 2 sem\Kursach\List.h=E:\LABI 2 sem\Kursach\Unit1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.517,=E:\LABI 2 sem\Kursach\Unit2.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.106,C:\Users\Станислав\Documents\RAD Studio\Projects\Project3.cbproj=E:\LABI 2 sem\Kursach\Project3.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.374,C:\Users\Станислав\Documents\RAD Studio\Projects\Unit1.h=E:\LABI 2 sem\Kursach\Unit1.h</Transaction>
+  </Transactions>
+</BorlandProject>

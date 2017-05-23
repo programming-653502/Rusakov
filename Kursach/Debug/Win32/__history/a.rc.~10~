@@ -1,0 +1,5 @@
+HIT  SOUND "Hit.wav"
+MISS SOUND "Miss.wav"
+FAIL SOUND "Fail.wav"
+GAMEOVER SOUND "GameOver.wav"
+NEWREC SOUND "NewRec.wav"

@@ -1,0 +1,609 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Main.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TFMain *FMain;
+int n = 0, Miss = 0, Hit = 0;
+bool Flag = false,
+	 FlagColor[3] = {false,false,false},
+	 FlagEdit[3]  = {false,false,false};
+int B[3]   = {255,161,97},
+	P[3]   = {100,0,0},
+	BG[3]  = {135,206,250},
+	TB[3]  = {0,0,0},
+	TP[3]  = {0,0,0},
+	TBG[3] = {0,0,0},
+	Case   = -1,
+	Btn    = 0;
+wchar_t Dir[255];
+
+
+//---------------------------------------------------------------------------
+__fastcall TFMain::TFMain(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TFMain::Timer1Timer(TObject *Sender)
+{
+	list.Show(Dir);
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFMain::Timer2Timer(TObject *Sender)
+{
+	n++;
+	Data x;
+	x.STarget = new TShape(Application);
+	x.F = false;
+	x.STarget->Parent=FMain;
+	x.STarget->Left=50+rand()%401;
+	x.STarget->Top=110+rand()%416;
+	x.STarget->Brush->Color = RGB( B[0], B[1], B[2] );
+	x.STarget->Pen->Color = RGB( P[0], P[1], P[2] );
+	//x.STarget->Brush->Style = bsDiagCross;
+	x.STarget->Width = 0;
+	x.STarget->Height = 0;
+	x.STarget->Shape=stCircle;
+	x.STarget->OnMouseDown = STargetMouseDown;
+	list.Add(x);
+	Timer2->Interval--;
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TFMain::STargetMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
+		  int X, int Y)
+{
+	Hit++;
+	if (CBSound->Checked)
+	{
+		wchar_t temp[255],play[255] = L"play ", stop[255] = L"stop ";
+		wcscpy( temp, Dir );
+		wcscat( temp, L"//Hit.wav");
+		wcscat( play, temp );
+		wcscat( stop, temp );
+		mciSendString(stop,0,0,0);
+		mciSendString(play,0,0,0);
+	}
+	//PlaySound(temp, 0, SND_ASYNC );
+	LHitNum->Caption = IntToStr(Hit);
+	list.Check(X,Y,Sender->GetHashCode());
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFMain::Timer3Timer(TObject *Sender)
+{
+	int M = StrToInt(LMinutes->Caption),S = StrToInt(LSeconds->Caption);
+	S++;
+	if (S == 60)
+	{
+		M++;
+		S = 0;
+	}
+	if (M < 10) LMinutes->Caption = "0"+IntToStr(M);
+		   else LMinutes->Caption = IntToStr(M);
+	if (S < 10) LSeconds->Caption = "0"+IntToStr(S);
+		   else LSeconds->Caption = IntToStr(S);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::FormCreate(TObject *Sender)
+{
+
+	srand( time(NULL) );
+	wchar_t temp[255];
+	const wchar_t* FolderName = L"AimTraining";
+	SHGetSpecialFolderPath( 0, Dir, CSIDL_PERSONAL, True);
+	wcscat( Dir, L"//" );
+	wcscat( Dir, FolderName );
+	if (!FileExists(Dir))
+	{
+		CreateDirectory( Dir, NULL );
+	}
+	wcscpy( temp, Dir );
+	wcscat( temp, L"//Hit.wav");
+	if(!FileExists(temp))
+	{
+		TResourceStream* ResPtr = new TResourceStream((int)HInstance, UnicodeString("HIT").c_str(), UnicodeString("SOUND").c_str());
+		ResPtr->SaveToFile(temp);
+		delete ResPtr;
+	}
+
+	wcscpy( temp, Dir );
+	wcscat( temp, L"//Miss.wav");
+	if(!FileExists(temp))
+	{
+		TResourceStream* ResPtr = new TResourceStream((int)HInstance, UnicodeString("MISS").c_str(), UnicodeString("SOUND").c_str());
+		ResPtr->SaveToFile(temp);
+		delete ResPtr;
+	}
+
+	wcscpy( temp, Dir );
+	wcscat( temp, L"//Fail.wav");
+	if(!FileExists(temp))
+	{
+		TResourceStream* ResPtr = new TResourceStream((int)HInstance, UnicodeString("FAIL").c_str(), UnicodeString("SOUND").c_str());
+		ResPtr->SaveToFile(temp);
+		delete ResPtr;
+	}
+
+
+	for (int i = 0; i < 3; i++)
+	{
+		TB[i]=B[i];
+		TP[i]=P[i];
+		TBG[i]=BG[i];
+	}
+	FMain->Color = RGB( 135, 206, 250 );
+	SBackground->Brush->Color = RGB( BG[0], BG[1], BG[2] );
+	SBrush->Brush->Color = RGB( B[0], B[1], B[2] );
+	SPen->Brush->Color = RGB( P[0], P[1], P[2] );
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFMain::PlayClick(TObject *Sender)
+{
+
+   BackGround->Brush->Color = RGB( BG[0], BG[1], BG[2] );
+   BackGround->Pen->Color   = RGB( BG[0], BG[1], BG[2] );
+   BackGround->Top = 59;
+   BackGround->Left = 0;
+   BackGround->Show();
+   PBar->Show();
+   Play->Hide();
+   Back->Show();
+   BOptions->Hide();
+   Image1->Show();
+   Image2->Show();
+   Image3->Show();
+   n++;
+   Timer3->Enabled = True;
+   Timer2->Enabled = True;
+   Timer1->Enabled = True;
+   Flag = true;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::BackClick(TObject *Sender)
+{
+	BackGround->Hide();
+	Flag = false;
+	Miss = 0;
+	Hit = 0;
+	PBar->Hide();
+	Timer2->Interval = 500;
+	Timer1->Enabled = false;
+	Timer2->Enabled = false;
+	Timer3->Enabled = false;
+	LMinutes->Caption="00";
+	LSeconds->Caption="00";
+	LHitNum->Caption="0";
+	LMissNum->Caption="0";
+	list.Clear();
+	n = 0;
+	LGameOver->Hide();
+	Back->Hide();
+	Play->Show();
+	BOptions->Show();
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFMain::BOptionsClick(TObject *Sender)
+{
+	//Очищаем RGB ползунки
+	FlagColor[0] = true;
+	FlagColor[1] = true;
+	FlagColor[2] = true;
+	FlagEdit[0]  = true;
+	FlagEdit[1]  = true;
+	FlagEdit[2]  = true;
+	EBlue->Text = "";
+	ERed->Text = "";
+	EGreen->Text = "";
+	TBRed->Position = 0;
+	TBGreen->Position = 0;
+	TBBlue->Position = 0;
+	//Убираем "выделение" фигуры
+	Case = -1;
+	int i = 0 ;
+	POptions->Top = 0;
+	POptions->Left = 0;
+	POptions->Show();
+	Play->Hide();
+	BOptions->Hide();
+	SystemParametersInfo( SPI_GETMOUSESPEED , 0 , &i , 0);
+	Sens->Text = IntToStr ( i );
+	TrackBar1->Position = i;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::BApplyClick(TObject *Sender)
+{
+	PConfirm->Show();
+	PConfirm->Top = 250;
+	PConfirm->Left = 150;
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::BOptionsBackClick(TObject *Sender)
+{
+	POptions->Hide();
+	Play->Show();
+	BOptions->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::TrackBar1Change(TObject *Sender)
+{
+	Sens->Text = IntToStr(TrackBar1->Position);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::SensKeyPress(TObject *Sender, wchar_t &Key)
+{
+	if ((Key >= '0' && Key <= '9')
+	||   Key == VK_BACK
+	||   Key == VK_RETURN
+	||   Key == VK_DELETE) {}
+	else Key = 0;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFMain::SBackgroundMouseDown(TObject *Sender, TMouseButton Button,
+          TShiftState Shift, int X, int Y)
+{
+	FlagColor[0] = true;
+	FlagColor[1] = true;
+	FlagColor[2] = true;
+	TBRed->Position   = TBG[0];
+	TBGreen->Position = TBG[1];
+	TBBlue->Position  = TBG[2];
+	ERed   -> Text = IntToStr( TBG[0] );
+	EGreen -> Text = IntToStr( TBG[1] );
+	EBlue  -> Text = IntToStr( TBG[2] );
+	Case = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::SBrushMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
+		  int X, int Y)
+{
+	FlagColor[0] = true;
+	FlagColor[1] = true;
+	FlagColor[2] = true;
+	TBRed->Position   = TB[0];
+	TBGreen->Position = TB[1];
+	TBBlue->Position  = TB[2];
+	ERed   -> Text = IntToStr( TB[0] );
+	EGreen -> Text = IntToStr( TB[1] );
+	EBlue  -> Text = IntToStr( TB[2] );
+	Case = 1;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::SPenMouseDown(TObject *Sender, TMouseButton Button, TShiftState Shift,
+		  int X, int Y)
+{
+	FlagColor[0] = true;
+	FlagColor[1] = true;
+	FlagColor[2] = true;
+	TBRed->Position   = TP[0];
+	TBGreen->Position = TP[1];
+	TBBlue->Position  = TP[2];
+	ERed   -> Text = IntToStr( TP[0] );
+	EGreen -> Text = IntToStr( TP[1] );
+	EBlue  -> Text = IntToStr( TP[2] );
+	Case = 2;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::TBRedChange(TObject *Sender)
+{
+	if (FlagColor[0])
+	{
+		FlagColor[0] = false;
+		return;
+	}
+	if (Case == -1)
+	{
+		TBRed->Position = 0;
+		return;
+	}
+	int x = TBRed->Position;
+	ERed->Text = IntToStr( x );
+	if (Case == 0)
+	{
+		TBG[0] = x;
+		SBackground->Brush->Color = RGB ( TBG[0], TBG[1], TBG[2] );
+	}
+	if (Case == 1)
+	{
+		TB[0] = x;
+		SBrush->Brush->Color = RGB ( TB[0], TBG[1], TB[2] );
+	}
+	if (Case == 2)
+	{
+		TP[0] = x;
+		SPen->Brush->Color = RGB ( TP[0], TP[1], TP[2] );
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::TBGreenChange(TObject *Sender)
+{
+	if (FlagColor[1])
+	{
+		FlagColor[1] = false;
+		return;
+	}
+	if (Case == -1)
+	{
+		TBGreen->Position = 0;
+		return;
+	}
+	int x = TBGreen->Position;
+	EGreen->Text = IntToStr( x );
+	if (Case == 0)
+	{
+		TBG[1] = x;
+		SBackground->Brush->Color = RGB ( TBG[0], TBG[1], TBG[2] );
+	}
+	if (Case == 1)
+	{
+		TB[1] = x;
+		SBrush->Brush->Color = RGB ( TB[0], TB[1], TB[2] );
+	}
+	if (Case == 2)
+	{
+		TP[1] = x;
+		SPen->Brush->Color = RGB ( TP[0], TP[1], TP[2] );
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::TBBlueChange(TObject *Sender)
+{
+	if (FlagColor[2])
+	{
+		FlagColor[2] = false;
+		return;
+	}
+	if (Case == -1)
+	{
+		TBBlue->Position = 0;
+		return;
+	}
+	int x = TBBlue->Position;
+	EBlue->Text = IntToStr( x );
+	if (Case == 0)
+	{
+		TBG[2] = x;
+		SBackground->Brush->Color = RGB ( TBG[0], TBG[1], TBG[2] );
+	}
+	if (Case == 1)
+	{
+		TB[2] = x;
+		SBrush->Brush->Color = RGB ( TB[0], TB[1], TB[2] );
+	}
+	if (Case == 2)
+	{
+		TP[2] = x;
+		SPen->Brush->Color = RGB ( TP[0], TP[1], TP[2] );
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::ERedKeyPress(TObject *Sender, wchar_t &Key)
+{
+	if (Case = -1)
+	{
+		Key = 0;
+		return;
+	}
+	if ((Key >= '0' && Key <= '9')
+	||   Key == VK_BACK
+	||   Key == VK_RETURN
+	||   Key == VK_DELETE) {}
+	else Key = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::EGreenKeyPress(TObject *Sender, wchar_t &Key)
+{
+	if (Case = -1)
+	{
+		Key = 0;
+		return;
+	}
+	if ((Key >= '0' && Key <= '9')
+	||   Key == VK_BACK
+	||   Key == VK_RETURN
+	||   Key == VK_DELETE) {}
+	else Key = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::EBlueKeyPress(TObject *Sender, wchar_t &Key)
+{
+	if (Case = -1)
+	{
+		Key = 0;
+		return;
+	}
+	if ((Key >= '0' && Key <= '9')
+	||   Key == VK_BACK
+	||   Key == VK_RETURN
+	||   Key == VK_DELETE) {}
+	else Key = 0;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::EBlueChange(TObject *Sender)
+{
+	if (FlagEdit[2])
+	{
+		FlagEdit[2] = false;
+		return;
+	}
+	int Pos = StrToInt(EBlue->Text);
+	if (Pos > 255)
+	{
+		EBlue->Text = "255";
+	}
+	if (Pos < 0)
+	{
+		EBlue->Text = "0";
+	}
+	TBBlue->Position = Pos;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::EGreenChange(TObject *Sender)
+{
+	if (FlagEdit[1])
+	{
+		FlagEdit[1] = false;
+		return;
+	}
+	int Pos = StrToInt(EGreen->Text);
+	if (Pos > 255)
+	{
+		EGreen->Text = "255";
+	}
+	if (Pos < 0)
+	{
+		EGreen->Text = "0";
+	}
+	TBGreen->Position = Pos;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::ERedChange(TObject *Sender)
+{
+	if (FlagEdit[0])
+	{
+		FlagEdit[0] = false;
+		return;
+	}
+	int Pos = StrToInt(ERed->Text);
+	if (Pos > 255)
+	{
+		ERed->Text = "255";
+	}
+	if (Pos < 0)
+	{
+		ERed->Text = "0";
+	}
+	TBRed->Position = Pos;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::SensChange(TObject *Sender)
+{
+	int Pos = StrToInt(Sens->Text);
+	if (Pos > 255)
+	{
+		Sens->Text = "20";
+	}
+	if (Pos < 0)
+	{
+		Sens->Text = "1";
+	}
+	TrackBar1->Position = Pos;
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TFMain::BackGroundMouseDown(TObject *Sender, TMouseButton Button,
+          TShiftState Shift, int X, int Y)
+{
+	if (Flag)
+	{
+		if (CBSound->Checked)
+		{
+			wchar_t temp[255],play[255] = L"play ", stop[255] = L"stop ";
+			wcscpy( temp, Dir );
+			wcscat( temp, L"//Miss.wav");
+			wcscat( play, temp );
+			wcscat( stop, temp );
+			mciSendString(stop,0,0,0);
+			mciSendString(play,0,0,0);
+		}
+		Miss++;
+		LMissNum->Caption = IntToStr(Miss);
+	}
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TFMain::BYesClick(TObject *Sender)
+{
+	// Настройки мыши
+	int TBPos = TrackBar1->Position;
+	if (Sens->Text == "")
+	{
+		Sens->Text = IntToStr( TBPos );
+	} else
+	{
+		SystemParametersInfo(SPI_SETMOUSESPEED, 0 , (PVOID)TBPos, SPIF_SENDCHANGE);
+		TrackBar1->Position = StrToInt(Sens->Text);
+		Sens->Text = IntToStr( TBPos );
+	}
+	//Настройки цвета
+	B[0] = TB[0];
+	B[1] = TB[1];
+	B[2] = TB[2];
+	P[0] = TP[0];
+	P[1] = TP[1];
+	P[2] = TP[2];
+	BG[0] = TBG[0];
+	BG[1] = TBG[1];
+	BG[2] = TBG[2];
+	//Очищаем RGB ползунки
+	FlagColor[0] = true;
+	FlagColor[1] = true;
+	FlagColor[2] = true;
+	FlagEdit[0]  = true;
+	FlagEdit[1]  = true;
+	FlagEdit[2]  = true;
+	EBlue->Text = "";
+	ERed->Text = "";
+	EGreen->Text = "";
+	TBRed->Position = 0;
+	TBGreen->Position = 0;
+	TBBlue->Position = 0;
+	//Убираем "выделение" фигуры
+	Case = -1;
+	//Скрываем панель подтверждения
+	PConfirm->Hide();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::BNoClick(TObject *Sender)
+{
+	//Скрываем панель подтверждения
+	PConfirm->Hide();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TFMain::BResetClick(TObject *Sender)
+{
+	Btn = 1;
+	PConfirm->Show();
+}
+//---------------------------------------------------------------------------
+
